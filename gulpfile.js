@@ -13,6 +13,8 @@ var imagemin = require('gulp-imagemin');//压缩图片文件
 var pngquant = require('imagemin-pngquant'); //png图片压缩插件
 var connect=require('gulp-connect');//引入gulp-connect模块 浏览器刷新
 var cache = require('gulp-cache');//压缩图片可能会占用较长时间，使用 gulp-cache 插件可以减少重复压缩。
+var postcss      = require('gulp-postcss');
+var autoprefixer = require('autoprefixer');
 
 
 //
@@ -26,6 +28,7 @@ gulp.task('css',function(){//编译scss
   return gulp.src('src/css/**/*.scss')
     .pipe(sass())//编译scss
     // .pipe(gulp.dest('app/css')) //当前对应css文件
+    .pipe(postcss([ autoprefixer({ browsers: ['last 2 versions'] }) ]))
     .pipe(gulp.dest('src/css')) //当前对应css文件
     .pipe(connect.reload());//更新
 })
@@ -57,7 +60,7 @@ gulp.task('server', function(){
 
 //1.自动监测文件变化并刷新浏览器
 
-gulp.task('test', gulp.series('css', 'server'));
+gulp.task('dev', gulp.series('css', 'server'));
 
 // //初始生成app/dist目录
 // gulp.task('init',gulp.series('clean:src/dist',gulp.parallel('html','css','fonts','images')));
