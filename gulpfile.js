@@ -28,7 +28,7 @@ gulp.task('css',function(){//编译scss
   return gulp.src('src/css/**/*.scss')
     .pipe(sass())//编译scss
     // .pipe(gulp.dest('app/css')) //当前对应css文件
-    .pipe(postcss([ autoprefixer({ browsers: ['last 2 versions'] }) ]))
+    .pipe(postcss([ autoprefixer({ overrideBrowserslist: ['last 2 versions'] }) ]))
     .pipe(gulp.dest('src/css')) //当前对应css文件
     .pipe(connect.reload());//更新
 })
